@@ -21,8 +21,8 @@ app.use(express.json());
 app.use(rateLimiter);
 
 // Mount routes
-app.use('/api', require('./routes/chatbotRoutes'));
-app.use('/api', require('./routes/predictRoutes'));
+app.use('/api/chat', require('./routes/chatbotRoutes'));
+app.use('/api/predict', require('./routes/predictRoutes'));
 
 
 // Error handler
