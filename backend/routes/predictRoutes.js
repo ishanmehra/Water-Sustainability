@@ -1,0 +1,7 @@
+const express = require('express');
+const router = express.Router();
+const { predictHandler } = require('../controllers/predictController');
+
+router.post('/predict', predictHandler);
+
+module.exports = router;

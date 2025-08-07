@@ -1,0 +1,197 @@
+# Water Sustainability Assessment Web App
+
+A full-stack web application for assessing water sustainability using IBM WatsonX.ai and OpenAI, with a modern React frontend and a robust, production-ready Node.js backend.
+
+---
+
+## Features
+
+- **Water Sustainability Assessment**: Enter country, year, and water usage data to get a sustainability score, category, and improvement suggestions.
+- **AI Chatbot**: Ask water sustainability questions and get answers powered by OpenAI (gpt-4o-mini).
+- **WatsonX Integration**: Backend uses IBM WatsonX.ai for sustainability scoring.
+- **Modern UI**: Responsive React frontend with a clean, single-page layout.
+- **Robust Backend**: Input validation, rate limiting, CORS, error handling, and environment variable management.
+- **Health Check**: `/api/health` endpoint for monitoring.
+
+---
+
+## Project Structure
+
+```
+water/
+  backend/
+    controllers/
+      chatbotController.js
+      healthController.js
+      predictController.js
+    routes/
+      chatbotRoutes.js
+      healthRoutes.js
+      predictRoutes.js
+    services/
+      openaiService.js
+      watsonxService.js
+      validationService.js
+    utils/
+      env.js
+      logger.js
+      rateLimiter.js
+    app.js
+    server.js
+    package.json
+    env.example
+    countries.json
+  frontend/
+    public/
+      index.html
+    src/
+      App.js
+      App.css
+      index.js
+      components/
+        AssessmentForm.js
+        ChatWidget.js
+        SustainabilityResult.js
+    package.json
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- npm
+
+### 1. Clone the repository
+
+```sh
+git clone <your-repo-url>
+cd water
+```
+
+### 2. Backend Setup
+
+```sh
+cd backend
+cp env.example .env
+# Edit .env and add your API keys and config
+npm install
+```
+
+#### Required Environment Variables (`backend/.env`)
+
+```
+OPENAI_API_KEY=your_openai_api_key_here
+IBM_API_KEY=your_ibm_cloud_api_key_here
+WATSONX_SCORING_URL=https://your-watsonx-deployment-url
+CORS_ORIGINS=http://localhost:3000
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=100
+```
+
+### 3. Frontend Setup
+
+```sh
+cd ../frontend
+npm install
+```
+
+---
+
+## Running the App
+
+From the project root, run both frontend and backend together:
+
+```sh
+npm run dev
+```
+
+Or run separately:
+
+- **Backend**: `cd backend && npm start`
+- **Frontend**: `cd frontend && npm start`
+
+The frontend will be available at [http://localhost:3000](http://localhost:3000) and will proxy API requests to the backend at [http://localhost:5000](http://localhost:5000).
+
+---
+
+## API Endpoints
+
+### **POST `/api/predict`**
+- **Description**: Assess water sustainability using IBM WatsonX.ai.
+- **Body**:
+  ```json
+  {
+    "country": "India",
+    "year": 2023,
+    "totalWaterConsumption": 600,
+    "perCapitaWaterUse": 180,
+    "agriculturalWaterUse": 75,
+    "industrialWaterUse": 15,
+    "householdWaterUse": 10,
+    "rainfallImpact": 900,
+    "groundwaterDepletionRate": 12,
+    "waterScarcityLevel": "High"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "sustainabilityScore": 45.0,
+    "scoreCategory": "Moderate",
+    "suggestions": [
+      "Encourage reduction in daily water use.",
+      "Implement groundwater recharge programs.",
+      "Adopt strict water conservation policies.",
+      "Encourage efficient irrigation techniques."
+    ]
+  }
+  ```
+
+### **POST `/api/chat`**
+- **Description**: Ask the AI chatbot about water sustainability.
+- **Body**:
+  ```json
+  { "message": "How can I save water at home?" }
+  ```
+- **Response**:
+  ```json
+  { "reply": "AI-generated answer from OpenAI." }
+  ```
+
+### **GET `/api/health`**
+- **Description**: Health check endpoint.
+- **Response**:
+  ```json
+  { "status": "ok", "timestamp": 1690000000000 }
+  ```
+
+---
+
+## Security & Best Practices
+
+- All secrets are loaded from environment variables.
+- Rate limiting and CORS are enabled and configurable.
+- Input validation is enforced on all endpoints.
+- No sensitive data is logged.
+- Error handling is consistent and safe.
+
+---
+
+## Customization
+
+- **Frontend**: Edit `src/components` for UI changes.
+- **Backend**: Add new endpoints in `controllers/`, `routes/`, and `services/`.
+- **Country List**: Update `backend/countries.json` as needed.
+
+---
+
+## License
+
+MIT
+
+---
+
+If you need further customization or want to add deployment instructions, badges, or screenshots, let me know!
