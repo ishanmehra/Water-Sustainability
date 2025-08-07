@@ -27,7 +27,8 @@ export default function AssessmentForm({ onResult }) {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch("/api/predict", {
+      const API_URL = process.env.REACT_APP_API_URL || "";
+      const res = await fetch(`${API_URL}/api/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
