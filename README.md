@@ -2,18 +2,13 @@
 
 A full-stack web application for assessing water sustainability using IBM WatsonX.ai and OpenAI, with a modern React frontend and a robust, production-ready Node.js backend.
 
----
-
 ## Features
 
-- **Water Sustainability Assessment**: Enter country, year, and water usage data to get a sustainability score, category, and improvement suggestions.
-- **AI Chatbot**: Ask water sustainability questions and get answers powered by OpenAI (gpt-4o-mini).
-- **WatsonX Integration**: Backend uses IBM WatsonX.ai for sustainability scoring.
-- **Modern UI**: Responsive React frontend with a clean, single-page layout.
-- **Robust Backend**: Input validation, rate limiting, CORS, error handling, and environment variable management.
-- **Health Check**: `/api/health` endpoint for monitoring.
-
----
+- **Water Sustainability Assessment**: Enter country, year, and water usage data to get a sustainability score, category, and improvement suggestions.  
+- **AI Chatbot**: Ask water sustainability questions and get answers powered by OpenAI (gpt-4o-mini).  
+- **WatsonX Integration**: Backend uses IBM WatsonX.ai for sustainability scoring via a custom machine learning model.  
+- **Modern UI**: Responsive React frontend with a clean, single-page layout.  
+- **Robust Backend**: Input validation, rate limiting, CORS, error handling, and environment variable management.  
 
 ## Project Structure
 
@@ -55,25 +50,23 @@ water/
     package.json
 ```
 
----
-
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18+ recommended)
-- npm
+- Node.js (v18+ recommended)  
+- npm  
 
 ### 1. Clone the repository
 
-```sh
-git clone <your-repo-url>
+```bash
+git clone 
 cd water
 ```
 
 ### 2. Backend Setup
 
-```sh
+```bash
 cd backend
 cp env.example .env
 # Edit .env and add your API keys and config
@@ -93,34 +86,32 @@ RATE_LIMIT_MAX=100
 
 ### 3. Frontend Setup
 
-```sh
+```bash
 cd ../frontend
 npm install
 ```
-
----
 
 ## Running the App
 
 From the project root, run both frontend and backend together:
 
-```sh
+```bash
 npm run dev
 ```
 
 Or run separately:
 
-- **Backend**: `cd backend && npm start`
-- **Frontend**: `cd frontend && npm start`
+- **Backend**: `cd backend && npm start`  
+- **Frontend**: `cd frontend && npm start`  
 
-The frontend will be available at [http://localhost:3000](http://localhost:3000) and will proxy API requests to the backend at [http://localhost:5000](http://localhost:5000).
-
----
+The frontend will be available at http://localhost:3000 and will proxy API requests to the backend at http://localhost:5000.
 
 ## API Endpoints
 
 ### **POST `/api/predict`**
-- **Description**: Assess water sustainability using IBM WatsonX.ai.
+- **Description**: Assess water sustainability using a custom IBM WatsonX.ai machine learning model trained on the Global Water Consumption Dataset (2000–2024). A new column `sustainability_score` was added to the dataset, and the model predicts this score based on user inputs.  
+- **Training Data**: Dataset sourced from Kaggle: Global Water Consumption Dataset (2000–2024), enriched with a `sustainability_score` column for supervised learning.  
+- **Dataset Link**: https://www.kaggle.com/datasets/atharvasoundankar/global-water-consumption-dataset-2000-2024  
 - **Body**:
   ```json
   {
@@ -151,7 +142,7 @@ The frontend will be available at [http://localhost:3000](http://localhost:3000)
   ```
 
 ### **POST `/api/chat`**
-- **Description**: Ask the AI chatbot about water sustainability.
+- **Description**: Ask the AI chatbot about water sustainability.  
 - **Body**:
   ```json
   { "message": "How can I save water at home?" }
@@ -162,36 +153,26 @@ The frontend will be available at [http://localhost:3000](http://localhost:3000)
   ```
 
 ### **GET `/api/health`**
-- **Description**: Health check endpoint.
+- **Description**: Health check endpoint.  
 - **Response**:
   ```json
   { "status": "ok", "timestamp": 1690000000000 }
   ```
 
----
-
 ## Security & Best Practices
 
-- All secrets are loaded from environment variables.
-- Rate limiting and CORS are enabled and configurable.
-- Input validation is enforced on all endpoints.
-- No sensitive data is logged.
-- Error handling is consistent and safe.
-
----
+- All secrets are loaded from environment variables.  
+- Rate limiting and CORS are enabled and configurable.  
+- Input validation is enforced on all endpoints.  
+- No sensitive data is logged.  
+- Error handling is consistent and safe.  
 
 ## Customization
 
-- **Frontend**: Edit `src/components` for UI changes.
-- **Backend**: Add new endpoints in `controllers/`, `routes/`, and `services/`.
-- **Country List**: Update `backend/countries.json` as needed.
-
----
+- **Frontend**: Edit `src/components` for UI changes.  
+- **Backend**: Add new endpoints in `controllers/`, `routes/`, and `services/`.  
+- **Country List**: Update `backend/countries.json` as needed.  
 
 ## License
 
 MIT
-
----
-
-If you need further customization or want to add deployment instructions, badges, or screenshots, let me know!
