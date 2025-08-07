@@ -106,6 +106,18 @@ Or run separately:
 
 The frontend will be available at http://localhost:3000 and will proxy API requests to the backend at http://localhost:5000.
 
+### ⚠️ Deployment & API Routing Notes
+- The backend Express app should mount routes as follows:
+  - In `app.js`:
+    ```js
+    app.use('/api/predict', require('./routes/predictRoutes'));
+    app.use('/api/chat', require('./routes/chatbotRoutes'));
+    ```
+  - In `routes/predictRoutes.js` and `routes/chatbotRoutes.js`, use `router.post('/', ...)` for both.
+- This ensures POST requests to `/api/predict` and `/api/chat` work as documented below.
+- If you change the mounting or router paths, update your frontend and documentation accordingly.
+- After any backend route changes, **redeploy your backend** (e.g., on Render). Only redeploy the frontend (e.g., on Vercel) if you change frontend code or environment variables.
+
 ## API Endpoints
 
 ### **POST `/api/predict`**
@@ -176,3 +188,8 @@ The frontend will be available at http://localhost:3000 and will proxy API reque
 ## License
 
 MIT
+
+## Troubleshooting
+- If you see `Cannot POST /api/predict` or `Cannot POST /api/chat`, check your backend route mounting and router paths as described above.
+- Ensure your backend is redeployed after any code changes.
+- If the frontend cannot reach the backend, check that `REACT_APP_API_URL` in your frontend `.env` is set to your backend's deployed URL and redeploy the frontend if changed.
